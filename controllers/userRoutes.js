@@ -56,11 +56,11 @@ router.post('/logout', (req, res) => {
       if (err) {
         res.status(500).json({ message: 'Logout failed. Please try again later.' });
       } else {
-        res.status(204).end(); // Successfully logged out, no content response
+        res.redirect('/'); // Redirect to homepage after logout
       }
     });
   } else {
-    res.status(404).end(); // If the user is not logged in
+    res.status(404).end(); // If no session is active
   }
 });
 
