@@ -16,9 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (response.ok) {
-          document.location.replace('/');
+          document.location.replace('/dashboard');  // Redirect to the dashboard after login
         } else {
-          alert('Failed to log in');
+          const errorMsg = await response.json();
+          alert(`Failed to log in: ${errorMsg.message}`);
         }
       }
     });

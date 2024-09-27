@@ -1,0 +1,17 @@
+<h1>Your Dashboard</h1>
+
+<!-- Display user's posts -->
+{{#each posts}}
+  <div>
+    <h2>{{this.title}}</h2>
+    <p>{{this.content}}</p>
+  </div>
+{{/each}}
+
+<!-- Logout Button -->
+<form id="logout-form" action="/users/logout" method="POST">
+  <button type="submit" id="logout-button">Logout</button>
+</form>
+
+<!-- Script for handling logout -->
+<script src="/js/logout.js"></script> <!-- Link to logout.js -->
