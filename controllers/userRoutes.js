@@ -52,11 +52,15 @@ router.post('/login', async (req, res) => {
 // Logout Route
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).json({ message: 'Logout failed. Please try again later.' });
+      } else {
+        res.status(204).end(); // Successfully logged out, no content response
+      }
     });
   } else {
-    res.status(404).end();
+    res.status(404).end(); // If the user is not logged in
   }
 });
 
