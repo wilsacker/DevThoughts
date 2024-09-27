@@ -9,17 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = document.querySelector('#password').value.trim();
 
       if (username && password) {
-        const response = await fetch('/users/login', {
-          method: 'POST',
-          body: JSON.stringify({ username, password }),
-          headers: { 'Content-Type': 'application/json' },
-        });
+        try {
+          const response = await fetch('/users/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, password }),
+            headers: { 'Content-Type': 'application/json' },
+          });
 
-        if (response.ok) {
-          document.location.replace('/dashboard');  // Redirect to the dashboard after login
-        } else {
-          const errorMsg = await response.json();
-          alert(`Failed to log in: ${errorMsg.message}`);
+          if (response.ok) {
+            document.location.replace('/dashboard');  // Redirect after successful login
+          } else {
+            const errorMsg = await response.json();  // Get the error message
+            alert(`Failed to log in: ${errorMsg.message || 'Unknown error'}`);
+          }
+        } catch (error) {
+          alert('Failed to log in: An unexpected error occurred.');
+          console.error('Login error:', error);  // Log any client-side errors
         }
       }
     });
