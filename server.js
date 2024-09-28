@@ -28,6 +28,17 @@ const sess = {
   }),
 };
 
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  protocol: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true, // This will ensure SSL is used
+      rejectUnauthorized: false // This is for self-signed certificates, set to true in production if using a trusted certificate
+    }
+  }
+});
+
 app.use(session(sess));
 
 app.engine('handlebars', hbs.engine);
