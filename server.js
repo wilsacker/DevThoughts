@@ -14,14 +14,18 @@ const hbs = exphbs.create({});
 
 const sess = {
   secret: 'Super secret secret',
-  cookie: {},
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
+    httpOnly: true,
+    secure: false, // should be true if using https
+    sameSite: 'strict',
+  },
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false, // ensures the session is not saved until modified
   store: new SequelizeStore({
-    db: sequelize
-  })
+    db: sequelize,
+  }),
 };
-
 app.use(session(sess));
 
 app.engine('handlebars', hbs.engine);

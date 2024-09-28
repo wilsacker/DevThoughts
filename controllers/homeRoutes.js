@@ -24,10 +24,17 @@ router.get('/', async (req, res) => {
     });
 
     const posts = postData.map((post) => post.get({ plain: true }));
-    res.render('homepage', { posts, loggedIn: req.session.loggedIn });
-    console.log("Session object:", req.session);
+
+    // Log the session object to see what loggedIn is set to
+    console.log('Session object:', req.session);
+
+    // Pass loggedIn to the template
+    res.render('homepage', {
+      posts,
+      loggedIn: req.session.loggedIn,
+    });
+    console.log("Is user logged in?", req.session.loggedIn);
   } catch (err) {
-    console.error("Error loading homepage: ", err); // Log the error
     res.status(500).json(err);
   }
 });

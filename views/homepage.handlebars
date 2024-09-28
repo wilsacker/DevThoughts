@@ -12,7 +12,7 @@
     {{/each}}
 
     <!-- Only show the comment form if the user is logged in -->
-    {{#if loggedIn}}
+    {{#if ../loggedIn}} 
       <form id="comment-form">
         <textarea id="comment-text" placeholder="Add a comment"></textarea>
         <input type="hidden" id="post-id" value="{{this.id}}">
@@ -20,6 +20,6 @@
       </form>
     {{else}}
       <p>You need to <a href="/login">log in</a> to add a comment.</p>
-    {{/if}}
+    {{/if}} 
   </div>
 {{/each}}

@@ -40,7 +40,8 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.loggedIn = true;
-
+    
+      console.log('Session after login/signup:', req.session);  // Log the session to check if loggedIn is set
       res.status(200).json({ user: userData, message: 'You are now logged in!' });
     });
   } catch (err) {
