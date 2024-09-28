@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const comment_text = document.querySelector('#comment-text').value.trim();
       const post_id = document.querySelector('#post-id').value;
+      console.log("Comment Text: ", comment_text);
+      console.log("Post ID: ", post_id);
 
       if (comment_text) {
         const response = await fetch('/comments', {
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (response.ok) {
           document.location.reload();
         } else {
+          console.error('Failed to add comment', await response.json());
           alert('Failed to add comment');
         }
       }

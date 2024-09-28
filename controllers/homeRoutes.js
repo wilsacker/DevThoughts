@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
 
     const posts = postData.map((post) => post.get({ plain: true }));
     res.render('homepage', { posts, loggedIn: req.session.loggedIn });
+    console.log("Session object:", req.session);
   } catch (err) {
     console.error("Error loading homepage: ", err); // Log the error
     res.status(500).json(err);
@@ -56,10 +57,23 @@ router.get('/signup', (req, res) => {
 // Route to render the dashboard (only accessible when logged in)
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    // Fetch all posts created by the logged-in user
     const postData = await Post.findAll({
       where: { user_id: req.session.user_id },
-      include: [User],
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comment,  // Include comments
+          include: [
+            {
+              model: User, // Include the user who made the comment
+              attributes: ['username'],
+            },
+          ],
+        },
+      ],
     });
 
     const posts = postData.map((post) => post.get({ plain: true }));

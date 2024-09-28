@@ -7,6 +7,19 @@
     <p>{{this.content}}</p>
     <p>Created by: {{this.user.username}}</p>
     
+    <!-- Display comments for this post -->
+    {{#each this.comments}}
+      <div>
+        <p>{{this.comment_text}} - by {{this.user.username}}</p>
+      </div>
+    {{/each}}
+
+    <!-- Comment Form -->
+    <form class="comment-form" data-post-id="{{this.id}}">
+      <textarea name="comment_text" placeholder="Add a comment"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+
     <button class="edit-post-btn" data-id="{{this.id}}">Edit</button>
     <button class="delete-post-btn" data-id="{{this.id}}">Delete</button>
   </div>
