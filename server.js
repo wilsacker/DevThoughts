@@ -13,11 +13,11 @@ const PORT = process.env.PORT || 3001;
 const hbs = exphbs.create({});
 
 const sess = {
-  secret: 'Super secret secret',
+  secret: process.env.SESSION_SECRET || 'Super secret secret',
   cookie: {
     maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds
     httpOnly: true,
-    secure: false, // should be true if using https
+    secure: process.env.NODE_ENV === 'production', // Set to true if using HTTPS in production
     sameSite: 'strict',
   },
   resave: false,
@@ -26,6 +26,7 @@ const sess = {
     db: sequelize,
   }),
 };
+
 app.use(session(sess));
 
 app.engine('handlebars', hbs.engine);
