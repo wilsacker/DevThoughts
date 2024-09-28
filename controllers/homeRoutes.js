@@ -1,17 +1,32 @@
 const router = require('express').Router();
-const { Post, User } = require('../models');
+const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth'); // Middleware to check if the user is logged in
 
 // Route to render the homepage
 router.get('/', async (req, res) => {
   try {
     const postData = await Post.findAll({
-      include: [User],
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ['username'],
+            },
+          ],
+        },
+      ],
     });
 
     const posts = postData.map((post) => post.get({ plain: true }));
     res.render('homepage', { posts, loggedIn: req.session.loggedIn });
   } catch (err) {
+    console.error("Error loading homepage: ", err); // Log the error
     res.status(500).json(err);
   }
 });

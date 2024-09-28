@@ -3,5 +3,23 @@
     <h2>{{this.title}}</h2>
     <p>{{this.content}}</p>
     <p>Posted by: {{this.user.username}}</p>
+
+    <!-- Display comments -->
+    {{#each this.comments}}
+      <div>
+        <p>{{this.comment_text}} - by {{this.user.username}}</p>
+      </div>
+    {{/each}}
+
+    <!-- Only show the comment form if the user is logged in -->
+    {{#if loggedIn}}
+      <form id="comment-form">
+        <textarea id="comment-text" placeholder="Add a comment"></textarea>
+        <input type="hidden" id="post-id" value="{{this.id}}">
+        <button type="submit">Submit</button>
+      </form>
+    {{else}}
+      <p>You need to <a href="/login">log in</a> to add a comment.</p>
+    {{/if}} <!-- Add missing closing if statement -->
   </div>
 {{/each}}
