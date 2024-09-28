@@ -64,6 +64,8 @@ router.get('/signup', (req, res) => {
 // Route to render the dashboard (only accessible when logged in)
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
+    console.log('User ID:', req.session.user_id); // Log user ID
+    
     const postData = await Post.findAll({
       where: { user_id: req.session.user_id },
       include: [

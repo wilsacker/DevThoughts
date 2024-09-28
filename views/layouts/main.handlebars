@@ -7,19 +7,27 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <nav>
-        {{#if loggedIn}}
-            <a href="/">Home</a>  
-            <a href="/dashboard">Dashboard</a>
-                <!-- Change the Logout link to a POST form -->
-                <form id="logout-form" action="/users/logout" method="POST" style="display: inline;">
-                <button type="submit" id="logout-button">Logout</button>
-            </form>
-        {{else}}
-            <a href="/login">Login</a>
-            <a href="/signup">Sign Up</a>
-        {{/if}}
-    </nav>
+<nav>
+    <a href="/">Home</a>
+    
+    <!-- If the user is logged in, allow access to Dashboard, otherwise show an alert -->
+    {{#if loggedIn}}
+        <a href="/dashboard">Dashboard</a>
+    {{else}}
+        <a href="#" onclick="alert('Please log in or sign up to access the dashboard!')">Dashboard</a>
+    {{/if}}
+
+    {{#if loggedIn}}
+        <!-- Show logout button if logged in -->
+        <form id="logout-form" action="/users/logout" method="POST" style="display: inline;">
+            <button type="submit" id="logout-button">Logout</button>
+        </form>
+    {{else}}
+        <!-- Show login and sign-up options if not logged in -->
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
+    {{/if}}
+</nav>
 
     {{{body}}}
 
